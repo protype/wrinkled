@@ -1,5 +1,6 @@
 .htaccess
 /.env
+/.env.testing
 /.idea
 /composer.lock
 /vendor
