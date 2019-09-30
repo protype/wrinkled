@@ -41,6 +41,14 @@
   define ('_STORAGE', _ROOT . '/storage');
 
 
+  /**
+   *
+   * Testing env
+   *
+   */
+  define ('_ENV_TESTING', (isset ($_ENV['APP_ENV']) ? $_ENV['APP_ENV'] : '') == 'testing');
+
+
   // System defines end
   endif;
 
@@ -59,7 +67,11 @@
    *
    */
   try {
+
     Dotenv\Dotenv::create (_ROOT)->load ();
+
+    if (_ENV_TESTING)
+      Dotenv\Dotenv::create (_ROOT, '.env.testing')->overload ();
   }
 
   catch (Dotenv\Exception\InvalidPathException $e) {
@@ -116,6 +128,7 @@
    * Load models
    *
    */
+  Shadow\Helper\Floader::once (true);
   Shadow\Helper\Floader::autoload (_ROOT . '/database/models');
 
 
@@ -232,9 +245,8 @@
 
   ], function ($router) use ($app) {
 
-    $testingEnv = array_get ($_ENV, 'APP_ENV', '') == 'testing';
-
-    Shadow\Helper\Floader::once (! $testingEnv);  // require_once => true
+    // Router files includes extend functions, should be executing whenever files loaded
+    Shadow\Helper\Floader::once (false);
     Shadow\Helper\Floader::inject (compact (["app", "router"]));
     Shadow\Helper\Floader::autoload (_ROOT . '/app');
 
