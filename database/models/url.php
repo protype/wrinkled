@@ -22,7 +22,7 @@
 
     /**
      *
-     * Validation rules & error messages
+     * Validation rules
      *
      */
     public static $_rules = [
@@ -33,6 +33,12 @@
       'cover' => 'image',
     ];
 
+
+    /**
+     *
+     * Error messages
+     *
+     */
     public static $_messages = [
 
       // Common messages
@@ -44,4 +50,18 @@
       'url.url' => 'Invalid value for the `url` field.',
       'code.regex' => 'Invalid value for the `code` field.',
     ];
+
+
+    /**
+     *
+     * Output filter
+     *
+     */
+    public static function clean ($data) {
+
+      unset ($data['id']);
+      unset ($data['hash']);
+
+      return $data;
+    }
   }

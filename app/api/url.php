@@ -31,15 +31,9 @@
       ->offset ($offset)
       ->find_array ();
 
-    // Combine response data
-    $resp = [
-      'meta' => [
-        'totalItems' => $total
-      ],
-      'data' => $urls,
-    ];
+    $urls = array_map ('Model\Url::clean', $urls);
 
-    return response ()->json ($resp, 200, [], JSON_UNESCAPED_UNICODE);
+    return response ()->json ($urls, 200, ['totalItems' => $total], JSON_UNESCAPED_UNICODE);
 
   }]);
 
@@ -107,8 +101,7 @@
     $data = $url->as_array ();
 
     // Remove protected field
-    unset ($data['id']);
-    unset ($data['hash']);
+    $url = Model\Url::clean ($url);
 
     return response ()->json (['data' => $data], 200, [], JSON_UNESCAPED_UNICODE);
 
