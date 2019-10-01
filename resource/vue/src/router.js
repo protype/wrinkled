@@ -24,13 +24,6 @@ export default new Router ({
       path: '/',
       name: 'index',
       component: () => import ('@/views/index.vue'),
-    },
-
-    // History
-    {
-      path: '/history',
-      name: 'history',
-      component: () => import ('@/views/history.vue'),
     }
   ]
 })

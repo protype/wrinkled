@@ -10,7 +10,7 @@
       <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-between align-items-center">
           <div class="col-4 pt-1">
-            <router-link tag="a" :to="{name: 'history'}" class="text-muted" exact>History</router-link>
+            <a class="text-muted" href="#">History</a>
           </div>
           <div class="col-4 text-center">
             <router-link tag="a" :to="{name: 'index'}" class="blog-header-logo text-dark" exact>Wrinkled</router-link>
@@ -134,6 +134,8 @@
      *
      */
     created () {
+      this.$api.get ('/url')
+        .then (res => console.log (res));
     },
 
 
