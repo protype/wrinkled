@@ -37,9 +37,9 @@
 
       $stdout = new StreamOutput (fopen('php://stdout', 'w'));
 
+      // Prepare database
       try {
 
-        // Prepare database
         $adapter = $_ENV['DB_ADAPTER'];
 
         $host = $_ENV['DB_HOST'];
@@ -73,8 +73,9 @@
         exit;
       }
 
+      // Database migrate
       try {
-        $input = new StringInput ('status -c ' . _ROOT . '/config/phinx.php');
+        $input = new StringInput ('migrate -c ' . _ROOT . '/config/phinx.php');
         $mute = new NullOutput ();
 
         $phinx = new PhinxApplication ();
@@ -85,6 +86,18 @@
 
       } catch (PDOException $e) {
         $stdout->writeln ("<error>Failed to migrate database: ". $e->getMessage () . '</error>');
+        exit;
+      }
+
+      // Fake data seeding
+      try {
+        $input = new StringInput ('seed:run -c ' . _ROOT . '/config/phinx.php');
+        $phinx->run ($input, $mute);
+
+        $stdout->writeln ("<info>Fake data seeding finished");
+
+      } catch (PDOException $e) {
+        $stdout->writeln ("<error>Failed to seeding fake data: ". $e->getMessage () . '</error>');
         exit;
       }
 
