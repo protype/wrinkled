@@ -10,7 +10,7 @@
    * List urls
    *
    */
-  $router->get ('/api/url', ['as' => 'api/url/list', function (Request $request) use ($app) {
+  $router->get ('/@/api/url', ['as' => 'api/url/list', function (Request $request) use ($app) {
 
     $count = \Model::Factory ('Model\Url')
       ->count ('id');
