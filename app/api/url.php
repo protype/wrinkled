@@ -22,7 +22,7 @@
     $limit = $limit < 1 ? 1 : ($limit > 100 ? 100 : $limit);
     $offset = $offset < 0 ? 0 : ($offset > $count ? $count : $offset);
 
-    $urls = \Model::Factory ('Model\Url')
+    $urls = Model::Factory ('Model\Url')
       ->order_by_desc ('id')
       ->limit ($limit)
       ->offset ($offset)
