@@ -13,24 +13,28 @@
    */
   $router->get ('/@/api/url', ['as' => 'api/url/list', function (Request $request) use ($app) {
 
-    $count = \Model::Factory ('Model\Url')
+    // Count url
+    $total = \Model::Factory ('Model\Url')
       ->count ('id');
 
+    // Prepare limit and offset
     $limit = $request->query->get ('limit', 20);
     $offset = $request->query->get ('offset', 0);
 
     $limit = $limit < 1 ? 1 : ($limit > 100 ? 100 : $limit);
-    $offset = $offset < 0 ? 0 : ($offset > $count ? $count : $offset);
+    $offset = $offset < 0 ? 0 : ($offset > $total ? $total : $offset);
 
+    // Retrieve urls
     $urls = Model::Factory ('Model\Url')
       ->order_by_desc ('id')
       ->limit ($limit)
       ->offset ($offset)
       ->find_array ();
 
+    // Combine response data
     $resp = [
       'meta' => [
-        'totalItems' => $count
+        'totalItems' => $total
       ],
       'data' => $urls,
     ];
@@ -51,6 +55,7 @@
     $code = '';
     $error = [];
 
+    // Try to validate input data
     try {
       $this->validate ($request,
         Model\Url::$_rules,
@@ -65,6 +70,7 @@
       ];
     }
 
+    // Make sure `code` is unique
     if (empty ($error) && isset ($data['code']) && $data['code'] != '') {
 
       $url = Model::Factory ('Model\Url')
@@ -83,11 +89,14 @@
     if (! empty ($error))
       return response ()->json (['errors' => [$error]], $error['status'], [], JSON_UNESCAPED_UNICODE);
 
+    // Create url data
     $url = Model::Factory ('Model\Url')->create ();
     $url->code = $code;
     $url->url = $data['url'];
-    $url->title = array_get ($data, 'title', null);
-    $url->description = array_get ($data, 'description', null);
+    $url->hash = md5 ($data['url']);
+    $url->title = array_get ($data, 'title', NULL);
+    $url->description = array_get ($data, 'description', NULL);
+    $url->cover = NULL;
     $url->save ();
 
     if ($url->code == '') {
@@ -95,10 +104,12 @@
       $url->save ();
     }
 
-    $resp = [
-      'data' => $url->as_array (),
-    ];
+    $data = $url->as_array ();
 
-    return response ()->json ($resp, 200, [], JSON_UNESCAPED_UNICODE);
+    // Remove protected field
+    unset ($data['id']);
+    unset ($data['hash']);
+
+    return response ()->json (['data' => $data], 200, [], JSON_UNESCAPED_UNICODE);
 
   }]);
