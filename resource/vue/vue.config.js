@@ -1,6 +1,7 @@
 const path = require ('path')
 const webpack = require ('webpack')
 const _ = require ('lodash');
+const GoogleFontsPlugin = require ("google-fonts-webpack-plugin");
 
 const basicConfig = {
   publicPath: process.env.BASE_URL,
@@ -13,7 +14,16 @@ const basicConfig = {
         'window.jQuery': 'jquery'
       })
     ]
-  }
+  },
+  chainWebpack: config => {
+    plugins: [
+      new GoogleFontsPlugin({
+        fonts: [
+          { family: "Playfair" }
+        ]
+      })
+    ]
+   }
 };
 
 const developmentConfig = {
