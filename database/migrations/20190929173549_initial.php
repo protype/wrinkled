@@ -41,6 +41,7 @@ class Initial extends AbstractMigration {
       // Basic fields
       ->addColumn ('code', 'char', ['limit' => 32])
       ->addColumn ('url', 'text')
+      ->addColumn ('hash', 'char', ['limit' => 32])
       ->addColumn ('title', 'char', ['limit' => 255, 'null' => TRUE])
       ->addColumn ('description', 'text', ['null' => TRUE])
       ->addColumn ('cover', 'char', ['limit' => 255, 'null' => TRUE])
@@ -53,6 +54,7 @@ class Initial extends AbstractMigration {
       // Keys
       ->addIndex (['code'], ['unique' => true])
       ->addIndex (['code', 'state'])
+      ->addIndex (['hash'])
       ->create ();
 
   }
