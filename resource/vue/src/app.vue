@@ -5,81 +5,88 @@
   -->
 <template>
   <div id="app">
-    <div class="container">
-
-      <header class="blog-header py-3">
-        <div class="row flex-nowrap justify-content-between align-items-center">
-          <div class="col-4 pt-1">
-            <a class="text-muted" href="#">History</a>
-          </div>
-          <div class="col-4 text-center">
-            <router-link tag="a" :to="{name: 'index'}" class="blog-header-logo text-dark" exact>Wrinkled</router-link>
-          </div>
-          <div class="col-4 d-flex justify-content-end align-items-center">
-            <a class="text-muted" href="#">
-              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mx-3" role="img" viewBox="0 0 24 24" focusable="false"><title>Search</title><circle cx="10.5" cy="10.5" r="7.5"/><path d="M21 21l-5.2-5.2"/></svg>
-            </a>
-            <a class="btn btn-sm btn-outline-secondary" href="#">Sign up</a>
-          </div>
-        </div>
-      </header>
-
-      <div class="nav-scroller py-1 mb-2">
-        <nav class="nav d-flex justify-content-between">
-          <a class="p-2 text-muted" href="#">All</a>
-        </nav>
-      </div>
-
-      <div class="jumbotron p-4 p-md-5 text-white rounded bg-dark">
-        <div class="col-md-6 px-0">
-          <h1 class="display-4 font-italic">Title of a longer featured blog post</h1>
-          <p class="lead my-3">Multiple lines of text that form the lede, informing new readers quickly and efficiently about what’s most interesting in this post’s contents.</p>
-          <p class="lead mb-0"><a href="#" class="text-white font-weight-bold">Continue reading...</a></p>
+    <header>
+      <div class="navbar navbar-dark bg-dark shadow-sm">
+        <div class="container d-flex justify-content-between">
+          <a href="#" class="navbar-brand d-flex align-items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" aria-hidden="true" class="mr-2" viewBox="0 0 24 24" focusable="false"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+            <strong>Wrinkled</strong>
+          </a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
         </div>
       </div>
+    </header>
 
-      <div class="row mb-2">
-        <div class="col-md-6">
-          <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-primary">World</strong>
-              <h3 class="mb-0">Featured post</h3>
-              <div class="mb-1 text-muted">Nov 12</div>
-              <p class="card-text mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="stretched-link">Continue reading</a>
-            </div>
-            <div class="col-auto d-none d-lg-block">
-              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+    <main role="main">
+
+      <section class="jumbotron text-center">
+        <div class="container-fluid">
+          <div class="row justify-content-md-center">
+            <div class="col-10">
+
+              <h1 class="jumbotron-heading">Wrinkled</h1>
+              <p class="lead text-muted">Simplify your links</p>
+              <div class="input-group input-group-lg mt-5">
+                <input type="text" class="form-control splice-input" placeholder="Paste long URL" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg">
+                <div class="input-group-append">
+                  <button type="button" class="btn-lg btn-secondary ml-3">Shorten</button>
+                </div>
+              </div>
+
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
-            <div class="col p-4 d-flex flex-column position-static">
-              <strong class="d-inline-block mb-2 text-success">Design</strong>
-              <h3 class="mb-0">Post title</h3>
-              <div class="mb-1 text-muted">Nov 11</div>
-              <p class="mb-auto">This is a wider card with supporting text below as a natural lead-in to additional content.</p>
-              <a href="#" class="stretched-link">Continue reading</a>
+      </section>
+
+      <div class="album py-5 bg-light">
+        <div class="container">
+
+          <div class="row">
+
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="col-auto d-none d-lg-block">
-              <svg class="bd-placeholder-img" width="200" height="250" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+
+            <div class="col-md-4">
+              <div class="card mb-4 shadow-sm">
+                <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: Thumbnail"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
+                <div class="card-body">
+                  <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+                  <div class="d-flex justify-content-between align-items-center">
+                    <div class="btn-group">
+                      <button type="button" class="btn btn-sm btn-outline-secondary">View</button>
+                      <button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
+                    </div>
+                    <small class="text-muted">9 mins</small>
+                  </div>
+                </div>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
-    </div>
 
-    <main role="main" class="container">
-      <router-view />
     </main>
 
-    <footer class="blog-footer">
-      <p>Blog template built for <a href="https://getbootstrap.com/">Bootstrap</a> by <a href="https://twitter.com/mdo">@mdo</a>.</p>
-      <p>
-        <a href="#">Back to top</a>
-      </p>
+    <footer class="my-4 pt-4 text-muted text-center text-small">
+      <p class="mb-1">&copy; 2019 Wrinkled</p>
     </footer>
+
   </div>
 </template>
 
