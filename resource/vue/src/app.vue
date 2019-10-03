@@ -45,11 +45,11 @@
 
             </div>
           </div>
-          <div class="options-panel collapse row justify-content-center mt-5">
+          <div id="options-panel" class="collapse row justify-content-center mt-5">
             <div class="col-11 text-left shadow-sm p-5 bg-light rounded position-relative">
 
               <div class="position-absolute option-close-button">
-                <button type="button" class="close" aria-label="Close">
+                <button type="button" class="close" aria-label="Close" data-toggle="collapse" data-target="#options-panel" aria-controls="options-panel" aria-expanded="false" >
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
@@ -402,7 +402,7 @@ textarea.form-control.description-text {
           this.action.description.value = res.data.custom_description;
           //this.action.image.value = res.data.custom_image;
 
-          $('.options-panel').collapse ('show');
+          $('#options-panel').collapse ('show');
 
           this.latest ().then (res => this.urls = res.data.concat (this.urls));
 
