@@ -26,11 +26,13 @@
      *
      */
     public static $_rules = [
-      'url' => 'required|url',
-      'code' => 'regex:/^[a-zA-Z0-9\-]+$/',
-      'title' => 'string',
-      'description' => 'string',
-      'cover' => 'image',
+      'domain_id' => 'required',
+      'original_url' => 'required|url',
+      'url_code' => 'regex:/^[a-zA-Z0-9\-]+$/',
+      'enable_custom' => 'boolean',
+      'custom_title' => 'string',
+      'custom_description' => 'string',
+      'custom_image' => 'image',
     ];
 
 
@@ -47,8 +49,8 @@
       'string' => 'A value for the `:attribute` field must be string.',
       'image' => 'A file for the `:attribute` field must be an image (jpeg, png, bmp, gif, svg, or webp).',
 
-      'url.url' => 'Invalid value for the `url` field.',
-      'code.regex' => 'Invalid value for the `code` field.',
+      'original_url.url' => 'Invalid value for the `original_url` field.',
+      'url_code.regex' => 'Invalid value for the `url_code` field.',
     ];
 
 
@@ -59,8 +61,8 @@
      */
     public static function clean ($data) {
 
-      unset ($data['id']);
-      unset ($data['hash']);
+      //unset ($data['id']);
+      //unset ($data['hash']);
 
       return $data;
     }

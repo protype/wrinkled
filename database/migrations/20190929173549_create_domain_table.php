@@ -3,7 +3,7 @@
 use Phinx\Migration\AbstractMigration;
 use Phinx\Db\Adapter\MysqlAdapter;
 
-class Initial extends AbstractMigration {
+class CreateDomainTable extends AbstractMigration {
 
   /**
    * Change Method.
@@ -32,19 +32,17 @@ class Initial extends AbstractMigration {
    */
   public function change () {
 
+    // Domain
 
-    // Url
-
-    $this->table ('url', ['id' => FALSE, 'primary_key' => 'id', 'comment' => 'Url'])
-      ->addColumn ('id', 'integer', ['limit' => MysqlAdapter::INT_BIG, 'signed' => FALSE, 'identity' => TRUE])
+    $this->table ('domain', ['id' => FALSE, 'primary_key' => 'id', 'comment' => 'Url'])
+      ->addColumn ('id', 'integer', ['limit' => MysqlAdapter::INT_SMALL, 'signed' => FALSE, 'identity' => TRUE])
 
       // Basic fields
-      ->addColumn ('code', 'char', ['limit' => 32])
-      ->addColumn ('url', 'text')
-      ->addColumn ('hash', 'char', ['limit' => 32])
-      ->addColumn ('title', 'char', ['limit' => 255, 'null' => TRUE])
-      ->addColumn ('description', 'text', ['null' => TRUE])
-      ->addColumn ('cover', 'char', ['limit' => 255, 'null' => TRUE])
+      ->addColumn ('scheme', 'char', ['limit' => 16])
+      ->addColumn ('host', 'char', ['limit' => 32])
+      ->addColumn ('path', 'char', ['limit' => 32, 'default' => ''])
+      ->addColumn ('shorty_characters', 'char', ['limit' => 255, 'null' => TRUE])
+      ->addColumn ('shorty_offset', 'integer', ['limit' => MysqlAdapter::INT_REGULAR, 'signed' => FALSE, 'default' => 0])
       ->addColumn ('state', 'integer', ['limit' => MysqlAdapter::INT_TINY, 'signed' => FALSE, 'default' => 1])
 
       // Timestamp
@@ -52,9 +50,8 @@ class Initial extends AbstractMigration {
       ->addColumn ('updatedate', 'timestamp', ['default' => 'CURRENT_TIMESTAMP', 'update' => 'CURRENT_TIMESTAMP'])
 
       // Keys
-      ->addIndex (['code'], ['unique' => true])
-      ->addIndex (['code', 'state'])
-      ->addIndex (['hash'])
+      ->addIndex (['host', 'path'], ['unique' => true])
+      ->addIndex (['state'])
       ->create ();
 
   }
