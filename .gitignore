@@ -1,4 +1,7 @@
 .htaccess
+!/public/.htaccess
+!/public/@/.htaccess
+!/public/@/api/.htaccess
 /.env
 /.env.testing
 /.idea
