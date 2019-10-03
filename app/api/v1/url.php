@@ -11,7 +11,7 @@
    * List urls
    *
    */
-  $router->get ('/api/v1/url', ['as' => 'api/v1/url/list', function (Request $request) use ($app) {
+  $router->get ('/v1/url', ['as' => 'api/v1/url/list', function (Request $request) use ($app) {
 
     // Count url
     $total = \Model::Factory ('Model\Url')
