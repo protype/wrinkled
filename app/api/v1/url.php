@@ -68,7 +68,7 @@
    * Create url
    *
    */
-  $router->post ('/api/v1/url', ['as' => 'api/v1/url/add', function (Request $request) use ($app) {
+  $router->post ('/v1/url', ['as' => 'api/v1/url/add', function (Request $request) use ($app) {
 
     $data = $request->json ()->all ();
     $code = '';
@@ -170,7 +170,7 @@
    * Update url
    *
    */
-  $router->put ('/api/v1/url/{id}', ['as' => 'api/v1/url/update', function (Request $request, $id) use ($app) {
+  $router->put ('/v1/url/{id}', ['as' => 'api/v1/url/update', function (Request $request, $id) use ($app) {
 
     $data = $request->json ()->all ();
     $code = '';
@@ -271,7 +271,7 @@
    * Retrieve url
    *
    */
-  $router->get ('/api/v1/url/{id}', ['as' => 'api/v1/url/read', function (Request $request, $id) use ($app) {
+  $router->get ('/v1/url/{id}', ['as' => 'api/v1/url/read', function (Request $request, $id) use ($app) {
 
     if (! isset ($id)) {
       return response ()->json ([
