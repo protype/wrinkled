@@ -11,7 +11,7 @@
    * List domains
    *
    */
-  $router->get ('/@/api/domain', ['as' => 'api/domain/list', function (Request $request) use ($app) {
+  $router->get ('/@/api/v1/domain', ['as' => 'api/v1/domain/list', function (Request $request) use ($app) {
 
     // Count domain
     $total = \Model::Factory ('Model\Domain')
