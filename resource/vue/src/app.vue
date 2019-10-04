@@ -6,11 +6,11 @@
 <template>
   <div id="app">
     <header>
-      <div class="navbar navbar-dark bg-wrinkled shadow-sm">
+      <div class="navbar navbar-dark bg-wrinkle shadow-sm">
         <div class="container d-flex justify-content-between">
           <a href="#" class="navbar-brand d-flex align-items-center">
             <img src="@/assets/img/logo.svg" width="20" height="20" class="mr-2" />
-            <strong>Wrinkled</strong>
+            <strong>Wrinkle</strong>
           </a>
           <!--
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarHeader" aria-controls="navbarHeader" aria-expanded="false" aria-label="Toggle navigation">
@@ -28,7 +28,7 @@
           <div class="row justify-content-center">
             <div class="col-12 col-md-10">
 
-              <h1 class="jumbotron-heading">Wrinkled</h1>
+              <h1 class="jumbotron-heading">Wrinkle</h1>
               <p class="lead text-muted">Simplify your links</p>
               <div class="input-group input-group-lg mt-5">
                 <!--
@@ -41,7 +41,7 @@
                 -->
                 <input type="text" class="form-control splice-input" :class="{'is-invalid': action.long.invalid}" @keyup.enter="shorten" placeholder="Paste long URL" v-model="action.long.value">
                 <div class="input-group-append">
-                  <button type="button" @click="shorten" class="btn-lg btn-wrinkled ml-3">Shorten</button>
+                  <button type="button" @click="shorten" class="btn-lg btn-wrinkle ml-3">Shorten</button>
                 </div>
               </div>
 
@@ -116,7 +116,7 @@
 
               <hr class="mb-4" />
 
-              <button class="btn btn-wrinkled btn-lg btn-block mt-4" @click="update" :disabled="action.id == 0">Save</button>
+              <button class="btn btn-wrinkle btn-lg btn-block mt-4" @click="update" :disabled="action.id == 0">Save</button>
 
             </div>
           </div>
@@ -194,12 +194,11 @@
     </main>
 
     <footer class="my-4 pt-4 text-muted text-center text-small">
-      <p class="mb-1">&copy; 2019 Protype</p>
+      <p class="mb-1">Made with <span class="text-danger">❤</span> in Taiwan ． Power by Protype</p>
     </footer>
 
   </div>
 </template>
-
 
 <!--
   *

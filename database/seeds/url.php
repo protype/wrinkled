@@ -24,7 +24,7 @@ class Url extends AbstractSeed
       $datas[] = [
         'domain_id'          => 1,
         'url_code'           => $code = $faker->unique ()->regexify ('[a-zA-Z0-9]{2,6}'),
-        'short_url'          => 'wks/protype/project/wrinkled/public/' . $code,
+        'short_url'          => 'wks/protype/project/wrinkle/public/' . $code,
         'original_url'       => $url = $faker->url,
         'url_unique_hash'    => md5 ($url),
         'enable_custom'      => random_int (0, 1),

@@ -22,7 +22,7 @@ class Domain extends AbstractSeed
       [
         'scheme' => 'http',
         'host' => 'wks',
-        'path' => '/protype/project/wrinkled/public',
+        'path' => '/protype/project/wrinkle/public',
       ]
     ];
 
