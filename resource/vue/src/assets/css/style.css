@@ -13,6 +13,22 @@
   }
 }
 
+.navbar.bg-wrinkled {
+  background-image: linear-gradient(135deg, rgb(30, 11, 54), rgb(202, 55, 130) 75%);
+}
+
+.btn-wrinkled {
+  color: #fff;
+  background-color: #9b2b6d;
+  border-color: #9b2b6d
+}
+
+.btn-wrinkled:hover {
+  color: #fff;
+  background-color: #7D1F5B;
+  border-color: #7D1F5B;
+}
+
 .input-group.input-group-lg > .form-control.splice-input {
   border-top-right-radius: 0.3rem;
   border-bottom-right-radius: 0.3rem;
