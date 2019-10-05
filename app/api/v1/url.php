@@ -117,6 +117,107 @@
       $code = $data['url_code'];
     }
 
+    $filePath = '';
+
+    if (empty ($error) && isset ($data['image']['file_name']) && isset ($data['image']['file_content'])) {
+
+      try {
+
+        $fileExt = pathinfo (strtolower ($data['image']['file_name']), PATHINFO_EXTENSION);
+        $fileCode = base64_decode ($data['image']['file_content']);
+        $fileHash = md5 ($fileCode);
+        $fileName = "{$fileHash}.{$fileExt}";
+
+        $storageRoot = _ROOT . '/storage/public';
+        $filePath = '/images/' . implode ('/', str_split (substr ($fileHash, 0, 2))) . '/' . $fileName;
+
+        $fullPath = $storageRoot . $filePath;
+        $fullFolder = dirname ($fullPath);
+
+        if (! file_exists ($fullFolder))
+          mkdir ($fullFolder, 0777, true);
+
+        if (! file_exists ($fullPath)) {
+
+          // Save file
+          file_put_contents ($fullPath, $fileCode);
+
+          // Check if type is invalid
+          $allowExt = [];
+
+          // Verify file exif info
+          switch (exif_imagetype ($fullPath)) {
+
+            case IMAGETYPE_GIF:
+              $allowExt = ['gif'];
+              break;
+
+            case IMAGETYPE_JPEG:
+              $allowExt = ['jpg', 'jpeg'];
+              break;
+
+            case IMAGETYPE_PNG:
+              $allowExt = ['png'];
+              break;
+
+            case IMAGETYPE_BMP:
+              $allowExt = ['bmp'];
+              break;
+
+            case IMAGETYPE_TIFF_II:
+              $allowExt = ['tiff'];
+              break;
+
+            case IMAGETYPE_TIFF_MM:
+              $allowExt = ['tiff'];
+              break;
+
+            case IMAGETYPE_WEBP:
+              $allowExt = ['webp'];
+              break;
+
+            case IMAGETYPE_JPC:
+            case IMAGETYPE_JP2:
+            case IMAGETYPE_JPX:
+            case IMAGETYPE_JB2:
+            case IMAGETYPE_SWC:
+            case IMAGETYPE_IFF:
+            case IMAGETYPE_WBMP:
+            case IMAGETYPE_XBM:
+            case IMAGETYPE_ICO:
+            case IMAGETYPE_SWF:
+            case IMAGETYPE_PSD:
+            default:
+              break;
+          }
+
+          if (! in_array ($fileExt, $allowExt)) {
+            $error = [
+              'status' => 409,
+              'message' => "Unsupport image type of incorrect file extension.",
+              'errors' => ['image' => ["Unsupport image type of incorrect file extension."]],
+            ];
+
+            unlink ($fullPath);
+          }
+        }
+      }
+
+      catch (Exception $e) {
+
+        $message = $e->getMessage ();
+
+        if ($message != '')
+          $message = "$message, ";
+
+        $error = [
+          'status' => 400,
+          'message' => "{$message}, image uploaded failed.",
+          'errors' => ['image' => ["{$message}, image uploaded failed."]],
+        ];
+      }
+    }
+
     if (! empty ($error))
       return response ()->json ($error, $error['status'], [], JSON_UNESCAPED_UNICODE);
 
@@ -130,7 +231,7 @@
     $url->enable_custom = array_get ($data, 'enable_custom', false);
     $url->custom_title = array_get ($data, 'custom_title', '');
     $url->custom_description = array_get ($data, 'custom_description', '');
-    $url->custom_image = '';
+    $url->custom_image = $filePath;
     $url->save ();
 
     if ($url->url_code == '') {
@@ -237,6 +338,107 @@
         'errors' => ['domain_id' => ['Domain not exists.']],
       ];
 
+    $filePath = null;
+
+    if (empty ($error) && isset ($data['image']['file_name']) && isset ($data['image']['file_content'])) {
+
+      try {
+
+        $fileExt = pathinfo (strtolower ($data['image']['file_name']), PATHINFO_EXTENSION);
+        $fileCode = base64_decode ($data['image']['file_content']);
+        $fileHash = md5 ($fileCode);
+        $fileName = "{$fileHash}.{$fileExt}";
+
+        $storageRoot = _ROOT . '/storage/public';
+        $filePath = '/images/' . implode ('/', str_split (substr ($fileHash, 0, 2))) . '/' . $fileName;
+
+        $fullPath = $storageRoot . $filePath;
+        $fullFolder = dirname ($fullPath);
+
+        if (! file_exists ($fullFolder))
+          mkdir ($fullFolder, 0777, true);
+
+        if (! file_exists ($fullPath)) {
+
+          // Save file
+          file_put_contents ($fullPath, $fileCode);
+
+          // Check if type is invalid
+          $allowExt = [];
+
+          // Verify file exif info
+          switch (exif_imagetype ($fullPath)) {
+
+            case IMAGETYPE_GIF:
+              $allowExt = ['gif'];
+              break;
+
+            case IMAGETYPE_JPEG:
+              $allowExt = ['jpg', 'jpeg'];
+              break;
+
+            case IMAGETYPE_PNG:
+              $allowExt = ['png'];
+              break;
+
+            case IMAGETYPE_BMP:
+              $allowExt = ['bmp'];
+              break;
+
+            case IMAGETYPE_TIFF_II:
+              $allowExt = ['tiff'];
+              break;
+
+            case IMAGETYPE_TIFF_MM:
+              $allowExt = ['tiff'];
+              break;
+
+            case IMAGETYPE_WEBP:
+              $allowExt = ['webp'];
+              break;
+
+            case IMAGETYPE_JPC:
+            case IMAGETYPE_JP2:
+            case IMAGETYPE_JPX:
+            case IMAGETYPE_JB2:
+            case IMAGETYPE_SWC:
+            case IMAGETYPE_IFF:
+            case IMAGETYPE_WBMP:
+            case IMAGETYPE_XBM:
+            case IMAGETYPE_ICO:
+            case IMAGETYPE_SWF:
+            case IMAGETYPE_PSD:
+            default:
+              break;
+          }
+
+          if (! in_array ($fileExt, $allowExt)) {
+            $error = [
+              'status' => 409,
+              'message' => "Unsupport image type of incorrect file extension.",
+              'errors' => ['image' => ["Unsupport image type of incorrect file extension."]],
+            ];
+
+            unlink ($fullPath);
+          }
+        }
+      }
+
+      catch (Exception $e) {
+
+        $message = $e->getMessage ();
+
+        if ($message != '')
+          $message = "$message, ";
+
+        $error = [
+          'status' => 400,
+          'message' => "{$message}, image uploaded failed.",
+          'errors' => ['image' => ["{$message}, image uploaded failed."]],
+        ];
+      }
+    }
+
     if (! empty ($error))
       return response ()->json ($error, $error['status'], [], JSON_UNESCAPED_UNICODE);
 
@@ -249,7 +451,10 @@
     $url->enable_custom = array_get ($data, 'enable_custom', $url->enable_custom);
     $url->custom_title = array_get ($data, 'custom_title', '');
     $url->custom_description = array_get ($data, 'custom_description', '');
-    $url->custom_image = '';
+
+    if (! is_null ($filePath))
+      $url->custom_image = $filePath;
+
     $url->save ();
 
     $data = $url->as_array ();
