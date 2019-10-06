@@ -64,6 +64,18 @@
   right: 0.8rem;
 }
 
+.enable-custom {
+  font-size: 14px;
+  padding: 0;
+  vertical-align: bottom;
+  display: inline-block;
+  padding-top: 12px;
+  font-weight: normal;
+}
+
+.enable-custom label {
+  margin: 0;
+}
 
 .dz-reset {
   cursor: pointer;

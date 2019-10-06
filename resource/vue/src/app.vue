@@ -47,7 +47,7 @@
 
             </div>
           </div>
-          <div id="options-panel" class="collapse row justify-content-center mt-5">
+          <div id="options-panel" class=" row justify-content-center mt-5">
             <div class="col-11 text-left shadow-sm p-5 bg-light rounded position-relative">
 
               <div class="position-absolute option-close-button">
@@ -88,7 +88,13 @@
                 </div>
                 <div class="col-lg-7 col-xl-6 mt-5 mt-lg-0">
 
-                  <h4 class="mb-4">Advenced Option</h4>
+                  <h4 class="mb-4">
+                    Advenced Option
+                    <span class="enable-custom float-right">
+                      <label for="enable-custom" class="mr-2">Enable customize</label>
+                      <input id="enable-custom" type="checkbox" v-model="action.custom.value" value="1">
+                    </span>
+                  </h4>
 
                   <div class="row">
                     <div class="col-md-6 order-md-2 mb-3">
@@ -517,6 +523,7 @@ textarea.form-control.description-text {
           domain_id: this.action.domain_id,
           url_code: this.action.code.value,
           original_url: this.action.original.value,
+          enable_custom: this.action.custom.value == 1 ? 1 : 0,
           custom_title: this.action.title.value,
           custom_description: this.action.description.value,
           custom_image: {
