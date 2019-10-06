@@ -92,8 +92,23 @@
 
                   <div class="row">
                     <div class="col-md-6 order-md-2 mb-3">
-                      <label for="lastName">Cover</label>
-                      <img src="https://placekeanu.com/500/500" class="img-fluid general-cover shadow" alt="Responsive image">
+                      <label for="lastName">Cover <small :class="{'d-none': !dzImageIsUpdated}" class="dz-reset text-danger" @click="dzReset"><i class="fa fa-undo ml-2 font-small"></i></small></label>
+                      <!--
+                      <div id="dropzone" class="border shadow position-relative w-100" @drop.prevent="attachImage" @dragover.stop.self.prevent="showAttachTips (); consolelog('over')" @dragleave.stop.self.prevent="hideAttachTips (); consolelog('leave')" @dragexit.stop.self.prevent="consolelog('exit')" @dragenter.stop.self.prevent="consolelog('enter')">
+                      -->
+                      <div id="dropzone" :class="{'empty-image': dzImageIsEmpty, 'shadow': !dzImageIsEmpty}" class="position-relative w-100"
+                        @click.prevent="dzClick"
+                        @drop.prevent="dzAttachFile"
+                        @mouseover.prevent="dzTipHandler"
+                        @mouseleave.prevent="dzTipHandler"
+                        @dragover.prevent="dzTipHandler"
+                        @dragleave.prevent="dzTipHandler">
+                        <div class="tip-layer position-absolute w-100 h-100" style="top: 0; left: 0;">
+                          <p>Drop file or click to upload</p>
+                        </div>
+                        <img :src="dzImageSrc" class="preview img-fluid general-cover">
+                        <input @click.stop="" @change="dzAttachFile" ref="dzFile" type="file" class="d-none">
+                      </div>
                     </div>
                     <div class="col-md-6 order-md-1">
 
@@ -191,6 +206,26 @@
       </div>
       -->
 
+      <div class="fixed-bottom w-100" aria-live="polite" aria-atomic="true">
+        <div style="position: absolute; bottom: 20px; right: 20px;">
+
+          <div v-for="message in messages" v-if="message.show" class="toast" style="bottom: 300px" role="alert" aria-live="assertive" aria-atomic="true" :data-time="message.time">
+            <div class="toast-header">
+              <i :class="message.icon" width="20" height="20" class="mr-2" />
+              <strong class="mr-auto">{{ message.title || 'Wrinkle' }}</strong>
+              <small class="text-muted">just now</small>
+              <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="toast-body">
+              {{ message.message }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+
     </main>
 
     <footer class="my-4 pt-4 text-muted text-center text-small">
@@ -254,11 +289,12 @@ textarea.form-control.description-text {
           custom: {value: false, invalid: false},
           title: {value: '', invalid: false},
           description: {value: '', invalid: false},
-          image: {value: '', invalid: false},
+          image: {name: null, data: null, value: '', cache: '', invalid: false},
         },
 
         domains: [],
-        urls: []
+        urls: [],
+        messages: []
       }
     },
 
@@ -269,8 +305,23 @@ textarea.form-control.description-text {
      *
      */
     computed: {
+
       activeDomain () {
         return _.find (this.domains, {id: this.action.domain_id}) || {host: '', path: ''};
+      },
+
+      dzImageSrc () {
+        return this.action.image.value == ''
+          ? 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
+          : this.action.image.value;
+      },
+
+      dzImageIsEmpty () {
+        return this.action.image.value == '';
+      },
+
+      dzImageIsUpdated () {
+        return this.action.image.value != this.action.image.cache;
       }
     },
 
@@ -321,6 +372,8 @@ textarea.form-control.description-text {
      */
     created () {
 
+      let $vmc = this;
+
       this.$api.get ('/domain')
         .then (res => {
           this.domains = res.data;
@@ -329,6 +382,28 @@ textarea.form-control.description-text {
 
       this.latest ()
         .then (res => this.urls = res.data);
+
+      this.$nextTick (() => {
+        $('body').on ('hidden.bs.toast', '.toast', function () {
+
+          let $this = $(this)
+            , time = $this.data ('time')
+            , counter = 0
+            , index
+            ;
+
+          $vmc.messages.forEach (m => {
+
+            if (m.time == time)
+              m.show = false;
+
+            m.show && counter++;
+          })
+
+          if (counter == 0)
+            $vmc.messages.splice (0, $vmc.messages.length);
+        });
+      })
     },
 
 
@@ -401,9 +476,13 @@ textarea.form-control.description-text {
           this.action.custom.value = res.data.enable_custom;
           this.action.title.value = res.data.custom_title;
           this.action.description.value = res.data.custom_description;
+          this.action.image.value = res.data.custom_image;
+          this.action.image.cache = res.data.custom_image;
           //this.action.image.value = res.data.custom_image;
 
           $('#options-panel').collapse ('show');
+
+          this.toast ('success', 'Shorten Success', 'Target URL shortened successfully.')
 
           this.latest ().then (res => this.urls = res.data.concat (this.urls));
 
@@ -440,6 +519,10 @@ textarea.form-control.description-text {
           original_url: this.action.original.value,
           custom_title: this.action.title.value,
           custom_description: this.action.description.value,
+          custom_image: {
+            file_name: this.action.image.name,
+            file_data: this.action.image.data
+          }
         };
 
         this.$api.put (`/url/${act.id}`, data).then (res => {
@@ -452,14 +535,147 @@ textarea.form-control.description-text {
           this.action.custom.value = res.data.enable_custom;
           this.action.title.value = res.data.custom_title;
           this.action.description.value = res.data.custom_description;
-          //this.action.image.value = res.data.custom_image;
+          this.action.image.value = res.data.custom_image;
+          this.action.image.cache = res.data.custom_image;
 
           let idx = _.findIndex (this.urls, {id: res.data.id});
 
           if (idx >= 0)
             this.urls.splice (idx, 1, res.data);
 
+          this.toast ('success', 'Update Success', 'Shortened link updated successfully.')
+
         }).catch (res => console.log ('catch', res));
+      },
+
+
+      /**
+       *
+       * Dropzone attach file handler
+       *
+       */
+      toast (type, title, message) {
+
+        let icon = '';
+
+        switch (type) {
+
+          case 'success':
+            icon = 'fa fa-check-circle toast-icon toast-success';
+            break;
+
+          case 'warning':
+            icon = 'fa fa-warning toast-icon toast-warning';
+            break;
+        }
+
+        this.messages.push ({
+          show: true,
+          time: new Date ().getTime (),
+          icon,
+          title,
+          message
+        });
+
+        this.$nextTick (() => $('.toast').toast ({delay: 6000}).toast ('show'));
+      },
+
+
+      /**
+       *
+       * Dropzone click action
+       *
+       */
+      dzClick ($e) {
+        this.$refs.dzFile.click ();
+      },
+
+
+      /**
+       *
+       * Dropzone tip message handler
+       *
+       */
+      dzTipHandler ($e) {
+
+        switch ($e.type || '') {
+
+          case 'mouseover':
+            $('#dropzone').addClass ('mouseover');
+            break;
+
+          case 'mouseleave':
+            $('#dropzone').removeClass ('mouseover');
+            break;
+
+          case 'dragover':
+            $('#dropzone').addClass ('dragover');
+            break;
+
+          case 'dragleave':
+            $('#dropzone').removeClass ('dragover');
+            break;
+        }
+      },
+
+
+      /**
+       *
+       * Reset dropzone
+       *
+       */
+      dzReset () {
+
+        if (! confirm ('Reset cover image ?'))
+          return;
+
+        this.action.image.value = this.action.image.cache;
+        this.action.image.name = null;
+        this.action.image.data = null;
+
+        //this.toast ('warning', 'Reset Success', 'The cover image has been successfully reset.');
+      },
+
+
+      /**
+       *
+       * Dropzone attach file handler
+       *
+       */
+      dzAttachFile ($e) {
+
+        let files;
+
+        if ($e.type == 'drop' && $e.dataTransfer && $e.dataTransfer.files.length > 0)
+          files = $e.dataTransfer.files;
+
+        else if ($e.type == 'change' && $e.target.files && $e.target.files.length > 0)
+          files = $e.target.files;
+
+        if (! files)
+          return;
+
+        let $vmc = this
+          , file = files[0]
+          , reader = new FileReader ()
+          , $dz = $('#dropzone')
+          , $img = $dz.find ('.preview')
+          ;
+
+        reader.onload = $e => {
+
+          let dataurl = $e.target.result;
+
+          $vmc.action.image.name = file.name;
+          $vmc.action.image.data = dataurl.substr (dataurl.indexOf ('base64') + 7);
+          $vmc.action.image.value = dataurl;
+
+          $img.hasClass ('d-none') && $img.addClass ('d-block');
+          $dz.removeClass ('mouseover');
+          $dz.removeClass ('dragover');
+        };
+
+        reader.readAsDataURL (file);
       }
     },
   }

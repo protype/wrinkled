@@ -119,13 +119,13 @@
 
     $filePath = '';
 
-    if (empty ($error) && isset ($data['image']['file_name']) && isset ($data['image']['file_content'])) {
+    if (empty ($error) && isset ($data['custom_image']['file_name']) && isset ($data['custom_image']['file_data'])) {
 
       try {
 
-        $fileExt = pathinfo (strtolower ($data['image']['file_name']), PATHINFO_EXTENSION);
-        $fileCode = base64_decode ($data['image']['file_content']);
-        $fileHash = md5 ($fileCode);
+        $fileExt = pathinfo (strtolower ($data['custom_image']['file_name']), PATHINFO_EXTENSION);
+        $fileData = base64_decode ($data['custom_image']['file_data']);
+        $fileHash = md5 ($fileData);
         $fileName = "{$fileHash}.{$fileExt}";
 
         $storageRoot = _ROOT . '/storage/public';
@@ -140,7 +140,7 @@
         if (! file_exists ($fullPath)) {
 
           // Save file
-          file_put_contents ($fullPath, $fileCode);
+          file_put_contents ($fullPath, $fileData);
 
           // Check if type is invalid
           $allowExt = [];
@@ -340,13 +340,13 @@
 
     $filePath = null;
 
-    if (empty ($error) && isset ($data['image']['file_name']) && isset ($data['image']['file_content'])) {
+    if (empty ($error) && isset ($data['custom_image']) && isset ($data['custom_image']['file_name']) && isset ($data['custom_image']['file_data'])) {
 
       try {
 
-        $fileExt = pathinfo (strtolower ($data['image']['file_name']), PATHINFO_EXTENSION);
-        $fileCode = base64_decode ($data['image']['file_content']);
-        $fileHash = md5 ($fileCode);
+        $fileExt = pathinfo (strtolower ($data['custom_image']['file_name']), PATHINFO_EXTENSION);
+        $fileData = base64_decode ($data['custom_image']['file_data']);
+        $fileHash = md5 ($fileData);
         $fileName = "{$fileHash}.{$fileExt}";
 
         $storageRoot = _ROOT . '/storage/public';
@@ -361,7 +361,7 @@
         if (! file_exists ($fullPath)) {
 
           // Save file
-          file_put_contents ($fullPath, $fileCode);
+          file_put_contents ($fullPath, $fileData);
 
           // Check if type is invalid
           $allowExt = [];

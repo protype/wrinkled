@@ -32,7 +32,7 @@
       'enable_custom' => 'boolean',
       'custom_title' => 'string',
       'custom_description' => 'string',
-      'custom_image' => 'image',
+      //'custom_image' => 'image',
     ];
 
 
