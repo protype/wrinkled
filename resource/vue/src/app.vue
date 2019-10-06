@@ -69,7 +69,7 @@
                       </div>
                       <input type="text" class="form-control" :class="{'is-invalid': action.code.invalid}" placeholder="Custom URL" v-model="action.code.value">
                       <div class="input-group-append">
-                        <button type="button" class="btn btn-info"><i class="fa fa-copy"></i></button>
+                        <button :data-clipboard-text="actionDomainUrl + action.code.value" type="button" class="clipboard btn btn-info"><i class="fa fa-copy"></i></button>
                       </div>
                     </div>
                   </div>
@@ -263,6 +263,7 @@ textarea.form-control.description-text {
 
   // Import
   import _ from "lodash";
+  import ClipboardJS from "clipboard";
 
   // Components
 
@@ -390,6 +391,16 @@ textarea.form-control.description-text {
         .then (res => this.urls = res.data);
 
       this.$nextTick (() => {
+
+        // Initial Clipboard
+        let clipboard = new ClipboardJS ('.clipboard');
+
+        clipboard.on ('success', $e => {
+          this.toast ('success', 'Copy Success', 'Shortened URL has been copied.');
+          $e.clearSelection ();
+        });
+
+        // Bind Toast
         $('body').on ('hidden.bs.toast', '.toast', function () {
 
           let $this = $(this)
