@@ -261,6 +261,9 @@
     // Remove protected field
     $data = Model\Url::clean ($data);
 
+    $domains = array_map ('Model\Domain::clean', [$domain->as_array ()]);
+    $data['domain'] = $domains[0];
+
     return response ()->json ($data, 200, [], JSON_UNESCAPED_UNICODE);
 
   }]);

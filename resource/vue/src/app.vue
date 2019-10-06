@@ -47,7 +47,7 @@
 
             </div>
           </div>
-          <div id="options-panel" class=" row justify-content-center mt-5">
+          <div id="options-panel" class="collapse row justify-content-center mt-5">
             <div class="col-11 text-left shadow-sm p-5 bg-light rounded position-relative">
 
               <div class="position-absolute option-close-button">
@@ -290,6 +290,7 @@ textarea.form-control.description-text {
         action: {
           id: 0,
           domain_id: 0,
+          domain: null,
           long: {value: '', invalid: false},
           code: {value: '', invalid: false},
           original: {value: '', invalid: false},
@@ -315,6 +316,14 @@ textarea.form-control.description-text {
 
       activeDomain () {
         return _.find (this.domains, {id: this.action.domain_id}) || {host: '', path: ''};
+      },
+
+      actionDomainUrl () {
+
+        if (! this.action.domain)
+          return '';
+
+        return this.action.domain.scheme + '://' + this.action.domain.host + this.action.domain.path + '/';
       },
 
       dzImageSrc () {
@@ -486,6 +495,7 @@ textarea.form-control.description-text {
         }).then (res => {
 
           this.action.id = res.data.id;
+          this.action.domain = res.data.domain;
           this.action.domain_id = res.data.domain_id;
           this.action.code.value = res.data.url_code;
           this.action.original.value = res.data.original_url;
@@ -499,7 +509,7 @@ textarea.form-control.description-text {
 
           $('#options-panel').collapse ('show');
 
-          this.toast ('success', 'Shorten Success', 'Target URL shortened successfully.')
+          this.toast ('success', 'Shorten Success', 'Target URL shortened successfully.');
 
           this.latest ().then (res => this.urls = res.data.concat (this.urls));
 
@@ -546,6 +556,7 @@ textarea.form-control.description-text {
         this.$api.put (`/url/${act.id}`, data).then (res => {
 
           this.action.id = res.data.id;
+          this.action.domain = res.data.domain;
           this.action.domain_id = res.data.domain_id;
           this.action.code.value = res.data.url_code;
           this.action.original.value = res.data.original_url;
