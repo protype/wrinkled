@@ -8,5 +8,5 @@
    */
   App\Helper\Shorty::config ([
     'salt'    => $_ENV['APP_KEY'],
-    'padding' => 2,
+    'padding' => 1,
   ]);
