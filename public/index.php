@@ -107,27 +107,27 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="<?php= $desc ?>" />
-<meta name="image" content="<?php= $image ?>" />
-<link rel="image_src" href="<?php= $image ?>" />
+<meta name="description" content="<?php echo $desc ?>" />
+<meta name="image" content="<?php echo $image ?>" />
+<link rel="image_src" href="<?php echo $image ?>" />
 
-<meta property="og:image" content="<?php= $image ?>" />
-<meta property="og:title" content="<?php= $title ?>" />
-<meta property="og:description" content="<?php= $desc ?>" />
+<meta property="og:image" content="<?php echo $image ?>" />
+<meta property="og:title" content="<?php echo $title ?>" />
+<meta property="og:description" content="<?php echo $desc ?>" />
 
-<meta name="twitter:image:src" content="<?php= $image ?>">
+<meta name="twitter:image:src" content="<?php echo $image ?>">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="<?php= $title ?>">
-<meta name="twitter:description" content="<?php= $desc ?>">
+<meta name="twitter:title" content="<?php echo $title ?>">
+<meta name="twitter:description" content="<?php echo $desc ?>">
 
-<meta itemprop="name" content="<?php= $title ?>">
-<meta itemprop="image" content="<?php= $image ?>">
-<meta itemprop="description" content="<?php= desc ?>">
+<meta itemprop="name" content="<?php echo $title ?>">
+<meta itemprop="image" content="<?php echo $image ?>">
+<meta itemprop="description" content="<?php echo desc ?>">
 
-<title><?php= $title ?></title>
+<title><?php echo $title ?></title>
 
 <body>
-  <h1><?php= $title ?></h1>
-  <a href="<?php= $ourl ?>"><img title="<?php= $title ?>" src="<?php= $image ?>" alt="<?php= $title ?>" border=0 ></a>
-  <p><?php= $desc ?></p>
+  <h1><?php echo $title ?></h1>
+  <a href="<?php echo $ourl ?>"><img title="<?php echo $title ?>" src="<?php echo $image ?>" alt="<?php echo $title ?>" border=0 ></a>
+  <p><?php echo $desc ?></p>
 </body>
