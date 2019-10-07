@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "precache-manifest.e4a965e6629cf488a838fd269a9dcb9b.js"
+  "precache-manifest.3982284bf4bd46a5cb7ef15f579cb616.js"
 );
 
 workbox.core.setCacheNameDetails({prefix: "Wrinkled-UI"});
