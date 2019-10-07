@@ -122,7 +122,7 @@
 
 <meta itemprop="name" content="<?php echo $title ?>">
 <meta itemprop="image" content="<?php echo $image ?>">
-<meta itemprop="description" content="<?php echo desc ?>">
+<meta itemprop="description" content="<?php echo $desc ?>">
 
 <title><?php echo $title ?></title>
 
