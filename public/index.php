@@ -98,9 +98,9 @@
    *
    */
   $ourl  = $url->original_url;
-  $title = htmlspecialchars ($url->title, ENT_QUOTES | ENT_HTML401);
-  $desc  = htmlspecialchars ($url->description, ENT_QUOTES | ENT_HTML401);
-  $image = $url->image;
+  $title = htmlspecialchars ($url->custom_title, ENT_QUOTES | ENT_HTML401);
+  $desc  = htmlspecialchars ($url->custom_description, ENT_QUOTES | ENT_HTML401);
+  $image = $url->custom_image;
 
 ?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
