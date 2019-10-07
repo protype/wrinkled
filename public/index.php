@@ -52,8 +52,10 @@
     exit;
   }
 
-  $uri = rtrim (str_replace (array_get ($_SERVER, 'QUERY_STRING', ''), '', $uri), '?');
+  $pos = strpos ($uri, '?');
 
+  if ($pos !== false)
+    $uri = substr ($uri, 0, $pos);
 
   /**
    *
