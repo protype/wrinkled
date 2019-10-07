@@ -97,10 +97,11 @@
    * Display HTML for crawler
    *
    */
-  $ourl  = $url->original_url;
+  //$info = parse_url ();
+  $base = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname ($_SERVER['SCRIPT_NAME']);
   $title = htmlspecialchars ($url->custom_title, ENT_QUOTES | ENT_HTML401);
   $desc  = htmlspecialchars ($url->custom_description, ENT_QUOTES | ENT_HTML401);
-  $image = $url->custom_image;
+  $image = $base . $url->custom_image;
 
 ?><!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
