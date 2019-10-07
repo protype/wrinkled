@@ -38,7 +38,7 @@
      * Length of number padding.
      *
      */
-    private static $_padding = 1;
+    private static $_padding = 0;
 
 
     /**
@@ -122,7 +122,7 @@
       $salt = static::$_salt;
       $chars = static::$_chars;
 
-      if (! empty ($salt)) {
+      if ($padding > 0 && ! empty ($salt)) {
         $seed = self::seed ($num, $salt, $padding);
         $num = (int) ($seed.$num);
       }
