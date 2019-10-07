@@ -52,7 +52,7 @@
     exit;
   }
 
-  $uri = str_replace (array_get ($_SERVER, 'QUERY_STRING', ''), '', $uri);
+  $uri = rtrim (str_replace (array_get ($_SERVER, 'QUERY_STRING', ''), '', $uri), '?');
 
 
   /**
