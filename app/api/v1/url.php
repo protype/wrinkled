@@ -231,7 +231,7 @@
     $url->enable_custom = array_get ($data, 'enable_custom', false);
     $url->custom_title = array_get ($data, 'custom_title', '');
     $url->custom_description = array_get ($data, 'custom_description', '');
-    $url->custom_image = $filePath;
+    $url->custom_image = '/storage' . $filePath;
     $url->save ();
 
     if ($url->url_code == '') {
@@ -456,7 +456,7 @@
     $url->custom_description = array_get ($data, 'custom_description', '');
 
     if (! is_null ($filePath))
-      $url->custom_image = $filePath;
+      $url->custom_image = '/storage' . $filePath;
 
     $url->save ();
 
