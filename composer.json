@@ -1,7 +1,7 @@
 {
-  "name": "wake/shine",
-  "description": "A starter project with Lumen core and Silex development style.",
-  "keywords": ["framework", "lumen", "silex"],
+  "name": "Wrinkle",
+  "description": "A simple self-hosting url shorten service.",
+  "keywords": ["shorten", "url"],
   "license": "MIT",
   "type": "project",
   "require": {
@@ -41,7 +41,6 @@
   "scripts": {
     "post-root-package-install": [
       "@php -r \"file_exists('.env') || copy('.env.example', '.env');\"",
-      "@php -r \"file_exists('public/.htaccess.local') || rename('public/.htaccess.local', 'public/.htaccess');\""
     ]
   },
   "config": {
