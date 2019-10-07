@@ -234,6 +234,9 @@
     $url->custom_image = $filePath == '' ? '' : '/storage' . $filePath;
     $url->save ();
 
+    if (! is_null ($domain->shorty_characters) && is_string ($domain->shorty_characters) && strlen ($domain->shorty_characters) > 0)
+      Shorty::chars ($domain->shorty_characters);
+
     if ($url->url_code == '') {
 
       for ($i=0; $i<=100; $i++) {
