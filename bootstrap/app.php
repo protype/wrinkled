@@ -218,6 +218,7 @@
   $app->register (\Illuminate\Session\SessionServiceProvider::class);
 
   $app->configure ('database');
+  $app->configure ('shorty');
 
 
   /**
