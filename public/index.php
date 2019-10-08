@@ -120,7 +120,7 @@
 <meta name="image" content="<?php echo $image ?>" />
 <link rel="image_src" href="<?php echo $image ?>" />
 
-<meta property="og:url" content="<?php echo $short ?>" />
+<meta property="og:url" content="<?php echo $short ?>.html" />
 <meta property="og:title" content="<?php echo $title ?>" />
 <meta property="og:description" content="<?php echo $desc ?>" />
 <meta property="og:image" content="<?php echo $image ?>" />
