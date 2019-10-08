@@ -17,7 +17,7 @@ importScripts(
   "precache-manifest.3982284bf4bd46a5cb7ef15f579cb616.js"
 );
 
-workbox.core.setCacheNameDetails({prefix: "Wrinkled-UI"});
+workbox.core.setCacheNameDetails({prefix: "Wrinkle-UI"});
 
 /**
  * The workboxSW.precacheAndRoute() method efficiently caches and responds to
