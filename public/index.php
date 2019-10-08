@@ -57,6 +57,9 @@
   if ($pos !== false)
     $uri = substr ($uri, 0, $pos);
 
+  if (substr ($uri, 0, -5) == '.html')
+    $uri = substr ($url, 0, strlen ($uri) - 5);
+
   /**
    *
    * Fetch shortened url data
