@@ -102,7 +102,7 @@
    *
    */
   //$info = parse_url ();
-  $short = $url->short_url;
+  $origin = $url->origin_url;
   $base = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname ($_SERVER['SCRIPT_NAME']);
   $title = htmlspecialchars ($url->custom_title, ENT_QUOTES | ENT_HTML401);
   $desc  = htmlspecialchars ($url->custom_description, ENT_QUOTES | ENT_HTML401);
@@ -117,7 +117,7 @@
 <meta name="image" content="<?php echo $image ?>" />
 <link rel="image_src" href="<?php echo $image ?>" />
 
-<meta property="og:url" content="<?php echo $short ?>" />
+<meta property="og:url" content="<?php echo $origin ?>" />
 <meta property="og:title" content="<?php echo $title ?>" />
 <meta property="og:description" content="<?php echo $desc ?>" />
 <meta property="og:image" content="<?php echo $image ?>" />
