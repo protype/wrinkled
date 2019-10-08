@@ -58,7 +58,7 @@
     $uri = substr ($uri, 0, $pos);
 
   if (substr ($uri, -5, 5) == '.html')
-    $uri = substr ($url, 0, strlen ($uri) - 5);
+    $uri = substr ($uri, 0, strlen ($uri) - 5);
 
   /**
    *
