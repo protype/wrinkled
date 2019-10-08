@@ -102,7 +102,7 @@
    *
    */
   //$info = parse_url ();
-  $origin = $url->origin_url;
+  $origin = $url->original_url;
   $base = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . dirname ($_SERVER['SCRIPT_NAME']);
   $title = htmlspecialchars ($url->custom_title, ENT_QUOTES | ENT_HTML401);
   $desc  = htmlspecialchars ($url->custom_description, ENT_QUOTES | ENT_HTML401);
